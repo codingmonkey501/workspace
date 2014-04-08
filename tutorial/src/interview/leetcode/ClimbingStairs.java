@@ -9,7 +9,8 @@ public class ClimbingStairs {
 	 * can you climb to the top?
 	 */
 
-	public int climbStairs(int n) {
+	public int climbStairs(int n) { 
+		//Fabonacci number
 		if (n == 0) return 0;
 		int lastonesteps = 0;
 		int onesteps = 1;
