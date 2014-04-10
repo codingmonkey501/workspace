@@ -71,16 +71,17 @@ public class ValidSudoku {
         //check each box
         int rl=0; //row limit
         int cl=0; //col limit
-        for(int i=0;i<len/3;i++){
-            for(int j=0;j<len/3;j++){
-                char[] box =new char[len];
-                int ind=0;
-                for(int r=rl;r<len/3+rl;r++){ //wrong here : forget to add row limit for len/3+rl
-                    for(int c=cl;c<len/3+cl;c++){
-                        box[ind++]=board[r][c];
-                    }
+        for(int i=0;i<3;i++){ //traverse all block
+            for(int j=0;j<3;j++){
+            	
+                int[] box =new int[len];
+                for(int r=rl;r<3+rl;r++){ //wrong here : forget to add row limit for len/3+rl
+					for (int c = cl; c < 3 + cl; c++) {
+						if (board[r][c]!='.' && ++box[board[r][c] - '1'] > 1)
+							return false;
+					}
                 }
-                if(!isValid(box)) return false;
+                
                 cl+=3;
                 if(cl==len) cl=0;
             }
@@ -90,7 +91,20 @@ public class ValidSudoku {
         return true;
     }
     
-    public boolean isValid(char[] arr){
+	private boolean isValid(char[] arr) {
+		int[] nums = new int[9];
+		for (int i = 0; i < arr.length; i++) {
+			if (arr[i] != '.') {
+				int idx = arr[i] - '1';
+				if (++nums[idx] > 1)
+					return false;
+			}
+		}
+		return true;
+	}
+	
+	@Deprecated
+    public boolean isValid2(char[] arr){
         Set<String> set=new HashSet<String>(); //not able to use Set<char>
         int count=0;
         for(int i=0;i<arr.length;i++){
